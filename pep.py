@@ -40,8 +40,9 @@ from pubSubHandlers import banHandler
 from pubSubHandlers import notificationHandler
 from pubSubHandlers import updateSilenceHandler
 from pubSubHandlers import updateStatsHandler
-
-
+#Freaking russian symbols
+import os
+os.environ["PYTHONIOENCODING"] = "utf-8"
 def make_app():
 	return tornado.web.Application([
 		(r"/", mainHandler.handler),

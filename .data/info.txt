@@ -14,3 +14,5 @@
 [2019-11-21 23:52:08] INFO - Server started!
 [2019-11-22 00:29:17] INFO - IRC server started!
 [2019-11-22 00:29:17] INFO - Server started!
+[2019-11-23 23:24:19] INFO - IRC server started!
+[2019-11-23 23:24:19] INFO - Server started!
