@@ -420,12 +420,7 @@ class token:
 
 		# Silence the user if needed
 		if self.spamRate > 10:
-			self.silence(600, "Spamming (auto spam protection)")
-			chat.sendMessage(
-				glob.BOT_NAME,
-				self.username.encode().decode("ASCII", "ignore"),
-				"You have silenced, reason {}".format("Spamming (auto spam protection)")
-			)
+			self.kick(message='Stop spamming please...')
 
 	def isSilenced(self):
 		"""
