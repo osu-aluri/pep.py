@@ -37,11 +37,11 @@ if userToken.matchID != -1 and userToken.actionID != actions.MULTIPLAYING and us
 #will delete this
 	userToken.autopilot = packetData['actionMods'] & 8192
 	userToken.relax = packetData['actionMods'] & 128
-	if packetData['actionMods'] & 8192 != userToken.autopilot:
+	if packetData['actionMods'] & 8192 and not userToken.autopilot:
 		userToken.actionText = packetData["actionText"] + " on autopilot"
 		userToken.enqueue(serverPackets.notification('You switched to autopilot!'))
 		userToken.updateCachedStatsAp()
-	elif packetData['actionMods'] & 128 != userToken.relax:
+	elif packetData['actionMods'] & 128 and not userToken.relax:
 		userToken.actionText = packetData["actionText"] + " on relax"
 		userToken.enqueue(serverPackets.notification('You switched to relax!'))
 		userToken.updateCachedStatsRx()
