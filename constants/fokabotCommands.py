@@ -1282,7 +1282,7 @@ def rank_map(fro, chan, message):
         freeze_status = 1
     elif rank_type == 'unrank':
         rank_typed_str = 'unranke'
-        rank_type_id = -1
+        rank_type_id = 9
         freeze_status = 0
 
     # Grab beatmap_data from db

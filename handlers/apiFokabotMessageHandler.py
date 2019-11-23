@@ -13,6 +13,7 @@ from objects import glob
 class handler(requestsManager.asyncRequestHandler):
 	@tornado.web.asynchronous
 	@tornado.gen.engine
+	@sentry.captureTornado
 	def asyncGet(self):
 		statusCode = 400
 		data = {"message": "unknown error"}

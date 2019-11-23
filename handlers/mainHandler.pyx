@@ -62,6 +62,7 @@ from common.sentry import sentry
 class handler(requestsManager.asyncRequestHandler):
 	@tornado.web.asynchronous
 	@tornado.gen.engine
+	@sentry.captureTornado
 	def asyncPost(self):
 		# Track time if needed
 		if glob.outputRequestTime:
@@ -196,7 +197,7 @@ class handler(requestsManager.asyncRequestHandler):
 			except exceptions.tokenNotFoundException:
 				# Token not found. Disconnect that user
 				responseData = serverPackets.loginError()
-				responseData += serverPackets.notification("Whoops! Something went wrong, please login again.")
+				responseData += serverPackets.notification("Server is restarting, please wait, thank you for playing on our server!")
 				log.warning("Received packet from unknown token ({}).".format(requestTokenString))
 				log.info("{} has been disconnected (invalid token)".format(requestTokenString))
 			finally:
