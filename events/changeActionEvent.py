@@ -2,6 +2,7 @@ from common.log import logUtils as log
 from constants import clientPackets
 from constants import serverPackets
 from objects import glob
+from common.constants import actions
 
 def handle(userToken, packetData):
 	# Get usertoken data
@@ -37,18 +38,25 @@ if userToken.matchID != -1 and userToken.actionID != actions.MULTIPLAYING and us
 #will delete this
 	userToken.autopilot = packetData['actionMods'] & 8192
 	userToken.relax = packetData['actionMods'] & 128
-	if packetData['actionMods'] & 8192 and not userToken.autopilot:
-		userToken.actionText = packetData["actionText"] + " on autopilot"
-		userToken.enqueue(serverPackets.notification('You switched to autopilot!'))
-		userToken.updateCachedStatsAp()
-	elif packetData['actionMods'] & 128 and not userToken.relax:
-		userToken.actionText = packetData["actionText"] + " on relax"
+	
+	if packetData['actionMods'] & 128:
 		userToken.enqueue(serverPackets.notification('You switched to relax!'))
-		userToken.updateCachedStatsRx()
+		if userToken.actionID in (0, 1, 14):
+			userToken.actionText = packetData["actionText"] + " on Relax"
+		else:
+			userToken.actionText = packetData["actionText"] + " on Relax"
+			userToken.updateCachedStatsRx()
+	elif packetData['actionMods'] & 8192:
+		userToken.enqueue(serverPackets.notification('You switched to autopilot!'))
+		if userToken.actionID in (0, 1, 14):
+			userToken.actionText = packetData["actionText"] + " on Autopilot"
+		else:
+			userToken.actionText = packetData["actionText"] + " on Autopilot"
+		userToken.updateCachedStatsAp()
 	else:
-		userToken.actionText = packetData["actionText"] + " on vanilla"
 		userToken.enqueue(serverPackets.notification('You switched to vanilla!'))
-		userToken.updateCachedStats() 
+		userToken.actionText = packetData["actionText"]
+		userToken.updateCachedStats()
 
 	if userToken.gameMode != packetData["gameMode"]:
 		userToken.gameMode = packetData["gameMode"]
