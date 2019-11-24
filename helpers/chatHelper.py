@@ -212,7 +212,6 @@ def sendMessage(fro = "", to = "", message:str = "", token = None, toIRC = True)
 			raise exceptions.invalidArgumentsException()
 
 		# Truncate message if > 2048 characters
-		message = message.encode('utf-8')
 		message = message[:2048]+"..." if len(message) > 2048 else message
 
 		# Check for word filters
