@@ -24,6 +24,11 @@ class tokenList:
 	def __exit__(self, exc_type, exc_val, exc_tb):
 		self._lock.release()
 
+
+	def add_Tokens_FromDB(self):
+		tok = glob.db.execute("""SELECT * FROM usr_tokens""")
+		for i in tok:
+			log.info(i)
 	def addToken(self, userID, ip = "", irc = False, timeOffset=0, tournament=False):
 		"""
 		Add a token object to tokens list
@@ -35,6 +40,7 @@ class tokenList:
 		:param tournament: if True, flag this client as a tournement client. Default: True.
 		:return: token object
 		"""
+
 		newToken = osuToken.token(userID, ip=ip, irc=irc, timeOffset=timeOffset, tournament=tournament)
 		self.tokens[newToken.token] = newToken
 		glob.redis.incr("ripple:online_users")

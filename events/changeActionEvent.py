@@ -38,25 +38,19 @@ if userToken.matchID != -1 and userToken.actionID != actions.MULTIPLAYING and us
 #will delete this
 	userToken.autopilot = packetData['actionMods'] & 8192
 	userToken.relax = packetData['actionMods'] & 128
-	
-	if packetData['actionMods'] & 128:
-		userToken.enqueue(serverPackets.notification('You switched to relax!'))
-		if userToken.actionID in (0, 1, 14):
-			userToken.actionText = packetData["actionText"] + " on Relax"
-		else:
-			userToken.actionText = packetData["actionText"] + " on Relax"
+	if userToken.actionID in (0,1, 14):
+		if packetData['actionMods'] & 128:
+			userToken.enqueue(serverPackets.notification('You switched to relax!'))
 			userToken.updateCachedStatsRx()
-	elif packetData['actionMods'] & 8192:
-		userToken.enqueue(serverPackets.notification('You switched to autopilot!'))
-		if userToken.actionID in (0, 1, 14):
-			userToken.actionText = packetData["actionText"] + " on Autopilot"
+		elif packetData['actionMods'] & 8192:
+			userToken.updateCachedStatsAp()
+			userToken.enqueue(serverPackets.notification('You switched to autopilot!'))
+				
+			
 		else:
-			userToken.actionText = packetData["actionText"] + " on Autopilot"
-		userToken.updateCachedStatsAp()
-	else:
-		userToken.enqueue(serverPackets.notification('You switched to vanilla!'))
-		userToken.actionText = packetData["actionText"]
-		userToken.updateCachedStats()
+			userToken.enqueue(serverPackets.notification('You switched to vanilla!'))
+			
+			userToken.updateCachedStats()
 
 	if userToken.gameMode != packetData["gameMode"]:
 		userToken.gameMode = packetData["gameMode"]
@@ -64,7 +58,7 @@ if userToken.matchID != -1 and userToken.actionID != actions.MULTIPLAYING and us
 
 	# Always update action id, text, md5 and beatmapID
 	userToken.actionID = packetData["actionID"]
-	
+	userToken.actionText = packetData["actionText"]
 	userToken.actionMd5 = packetData["actionMd5"]
 	userToken.actionMods = packetData["actionMods"]
 	userToken.beatmapID = packetData["beatmapID"]

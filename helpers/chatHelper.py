@@ -151,7 +151,7 @@ def partChannel(userID = 0, channel = "", token = None, toIRC = True, kick = Fal
 		log.warning("User not connected to IRC/Bancho")
 		return 442	# idk
 
-def sendMessage(fro = "", to = "", message = "", token = None, toIRC = True):
+def sendMessage(fro = "", to = "", message:str = "", token = None, toIRC = True):
 	"""
 	Send a message to osu!bancho and IRC server
 
@@ -162,6 +162,7 @@ def sendMessage(fro = "", to = "", message = "", token = None, toIRC = True):
 	:param toIRC: if True, send the message to IRC. If False, send it to Bancho only. Default: True
 	:return: 0 if joined or other IRC code in case of error. Needed only on IRC-side
 	"""
+
 	try:
 		#tokenString = ""
 		# Get token object if not passed
@@ -211,6 +212,7 @@ def sendMessage(fro = "", to = "", message = "", token = None, toIRC = True):
 			raise exceptions.invalidArgumentsException()
 
 		# Truncate message if > 2048 characters
+		message = message.encode('utf-8')
 		message = message[:2048]+"..." if len(message) > 2048 else message
 
 		# Check for word filters
