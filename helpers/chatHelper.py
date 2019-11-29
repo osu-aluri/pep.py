@@ -277,7 +277,7 @@ def sendMessage(fro = "", to = "", message:str = "", token = None, toIRC = True)
 
 		# Send the message to IRC
 		if glob.irc and toIRC:
-			messageSplitInLines = message.encode("latin-1").decode("utf-8").split("\n")
+			messageSplitInLines = message.encode("utf-8").decode("utf-8").split("\n")
 			for line in messageSplitInLines:
 				if line == messageSplitInLines[:1] and line == "":
 					continue

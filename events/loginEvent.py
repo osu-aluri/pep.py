@@ -41,10 +41,12 @@ def handle(tornadoRequest):
 		# [2] mac addresses hash set
 		# [3] unique ID
 		# [4] disk ID
+		# [5] Minase`s feature!
 		splitData = loginData[2].split("|")
 		osuVersion = splitData[0]
 		timeOffset = int(splitData[1])
-		clientData = splitData[3].split(":")[:5]
+		clientData = splitData[3].split(":")[:6]
+
 		if len(clientData) < 4:
 			raise exceptions.forceUpdateException()
 
@@ -120,9 +122,16 @@ def handle(tornadoRequest):
 
 
 		# Deprecate telegram 2fa and send alert
-		if userUtils.deprecateTelegram2Fa(userID):
-			responseToken.enqueue(serverPackets.notification("error: 2FA disabled by admins"))
+		
 
+		try:
+			minaseClient = True
+		except Exception:
+			log.info("{}({}) joining from default client".format(loginData[0], userID), discord="cm")
+			minaseClient = False
+		if minaseClient is not None:
+			responseToken.enqueue(serverPackets.notification("You joined from minase!client, thank you for this :3"))
+			responseToken.from_minase = True
 		# Set silence end UNIX time in token
 		responseToken.silenceEndTime = userUtils.getSilenceEnd(userID)
 

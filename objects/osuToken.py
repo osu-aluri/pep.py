@@ -61,7 +61,7 @@ class token:
 		self.tillerino = [0,0,-1.0]	# beatmap, mods, acc
 		self.silenceEndTime = 0
 		self.queue = bytes()
-
+		self.from_minase = False
 		# Spam protection
 		self.spamRate = 0
 

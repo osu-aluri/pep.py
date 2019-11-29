@@ -55,7 +55,12 @@ if userToken.matchID != -1 and userToken.actionID != actions.MULTIPLAYING and us
 
 	# Always update action id, text, md5 and beatmapID
 	userToken.actionID = packetData["actionID"]
-	userToken.actionText = packetData["actionText"]
+	if userToken.from_minase:
+		
+		userToken.actionText = packetData["actionText"] + " From minase"
+	else:
+		userToken.actionText = packetData["actionText"]
+
 	userToken.actionMd5 = packetData["actionMd5"]
 	userToken.actionMods = packetData["actionMods"]
 	userToken.beatmapID = packetData["beatmapID"]
