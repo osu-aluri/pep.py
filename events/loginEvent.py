@@ -126,16 +126,29 @@ def handle(tornadoRequest):
 		
 
 		try:
-			minaseClient = splitData[6]
+			minaseClient = splitData[5]
 			minaseClient = True
 		except Exception:
 			#log.logMessage(, discord="staff", of="info.txt", stdout=False)
 			minaseClient = False
-			
+		# Get HWID, MAC address and more
+		# Structure (new line = "|", already split)
+		# [0] osu! version
+		# [1] plain mac addressed, separated by "."
+		# [2] mac addresses hash set
+		# [3] unique ID
+		# [4] disk ID
+		# [5] Minase`s feature!
 		if minaseClient == True:
 			responseToken.enqueue(serverPackets.notification("You joined from minase!client, thank you for this :3"))
 			responseToken.from_minase = True
-			schiavo.schiavo(glob.conf.config['webhooks']['cm']).sendMessage("{}({}) joining from default client".format(loginData[0], userID), glob.conf.config['webhooks']['cm'])
+			
+		else:
+			schiavo.schiavo(glob.conf.config['webhooks']['cm']).sendMessage("""{}({}) joining from default/another client
+			osu!version: {}
+
+			
+			""".format(loginData[0], userID, osuVersion), glob.conf.config['webhooks']['cm'])
 		# Set silence end UNIX time in token
 		responseToken.silenceEndTime = userUtils.getSilenceEnd(userID)
 
