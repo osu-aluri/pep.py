@@ -13,6 +13,7 @@ from helpers import locationHelper
 from objects import glob
 from helpers import packetHelper
 from constants import packetIDs
+from common.web import schiavo
 def handle(tornadoRequest):
 	# Data to return
 	responseToken = None
@@ -127,11 +128,13 @@ def handle(tornadoRequest):
 		try:
 			minaseClient = True
 		except Exception:
-			log.logMessage("{}({}) joining from default client".format(loginData[0], userID), discord="staff", of="info.txt", stdout=False)
+			#log.logMessage(, discord="staff", of="info.txt", stdout=False)
 			minaseClient = False
+			
 		if minaseClient == True:
 			responseToken.enqueue(serverPackets.notification("You joined from minase!client, thank you for this :3"))
 			responseToken.from_minase = True
+			schiavo.schiavo(glob.conf.config['webhooks']['cm']).sendMessage("{}({}) joining from default client".format(loginData[0], userID), glob.conf.config['webhooks']['cm'])
 		# Set silence end UNIX time in token
 		responseToken.silenceEndTime = userUtils.getSilenceEnd(userID)
 
