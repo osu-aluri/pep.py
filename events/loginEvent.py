@@ -145,7 +145,7 @@ def handle(tornadoRequest):
 			
 		else:
 			schiavo.schiavo(glob.conf.config['webhooks']['cm']).sendMessage("""{}({}) joining from default/another client
-			osu!version: {}
+osu!version: {}
 
 			
 			""".format(loginData[0], userID, osuVersion), glob.conf.config['webhooks']['cm'])
