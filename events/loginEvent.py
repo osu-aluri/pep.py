@@ -129,7 +129,7 @@ def handle(tornadoRequest):
 		except Exception:
 			log.info("{}({}) joining from default client".format(loginData[0], userID), discord="cm")
 			minaseClient = False
-		if minaseClient is not None:
+		if minaseClient == True:
 			responseToken.enqueue(serverPackets.notification("You joined from minase!client, thank you for this :3"))
 			responseToken.from_minase = True
 		# Set silence end UNIX time in token
