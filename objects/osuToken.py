@@ -420,7 +420,7 @@ class token:
 
 		# Silence the user if needed
 		if self.spamRate > 10:
-			self.kick(message='Stop spamming please...')
+			self.enqueue(serverPackets.banchoRestart(1))
 
 	def isSilenced(self):
 		"""

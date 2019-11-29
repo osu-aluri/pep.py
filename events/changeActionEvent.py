@@ -40,15 +40,12 @@ if userToken.matchID != -1 and userToken.actionID != actions.MULTIPLAYING and us
 	userToken.relax = packetData['actionMods'] & 128
 	if userToken.actionID in (0,1, 14):
 		if packetData['actionMods'] & 128:
-			userToken.enqueue(serverPackets.notification('You switched to relax!'))
 			userToken.updateCachedStatsRx()
 		elif packetData['actionMods'] & 8192:
 			userToken.updateCachedStatsAp()
-			userToken.enqueue(serverPackets.notification('You switched to autopilot!'))
 				
 			
 		else:
-			userToken.enqueue(serverPackets.notification('You switched to vanilla!'))
 			
 			userToken.updateCachedStats()
 
