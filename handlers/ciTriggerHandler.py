@@ -15,7 +15,7 @@ class handler(requestsManager.asyncRequestHandler):
 	@tornado.web.asynchronous
 	@tornado.gen.engine
 	@sentry.captureTornado
-	def asyncGet(self):
+	def asyncPost(self):
 		statusCode = 400
 		data = {"message": "unknown error"}
 		try:
