@@ -295,8 +295,8 @@ def sendMessage(fro = "", to = "", message:str = "", token = None, toIRC = True)
 
 		# File and discord logs (public chat only)
 		if to.startswith("#") and not (message.startswith("\x01ACTION is playing") and to.startswith("#spect_")):
-			log.chat("{fro} @ {to}: {message}".format(fro=token.username, to=to, message=message.encode("latin-1").decode("utf-8")))
-			glob.schiavo.sendChatlog("**{fro} @ {to}:** {message}".format(fro=token.username, to=to, message=message.encode("latin-1").decode("utf-8")))
+			log.chat("{fro} @ {to}: {message}".format(fro=token.username, to=to, message=message.encode("utf-8").decode("utf-8")))
+			glob.schiavo.sendChatlog("**{fro} @ {to}:** {message}".format(fro=token.username, to=to, message=message.encode("utf-8").decode("utf-8")))
 		return 0
 	except exceptions.userSilencedException:
 		token.enqueue(serverPackets.silenceEndTime(token.getSilenceSecondsLeft()))
