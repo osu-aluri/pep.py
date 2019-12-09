@@ -1183,6 +1183,25 @@ def switchServer(fro, chan, message):
 	# userToken.kick()
 	return "{} has been connected to {}".format(target, newServer)
 
+def vanilla(fro, chan, message):
+	# Get target user ID
+	target = fro
+	newServer = "vanilla.minase.tk"
+	targetUserID = userUtils.getIDSafe(target)
+	userID = userUtils.getID(fro)
+
+	# Make sure the user exists
+	if not targetUserID:
+		return "{}: user not found".format(target)
+
+	# Connect the user to the end server
+	userToken = glob.tokens.getTokenFromUserID(userID, ignoreIRC=True, _all=False)
+	userToken.enqueue(serverPackets.switchServer(newServer))
+
+	# Disconnect the user from the origin server
+	# userToken.kick()
+	return "reconnected"
+
 def rtx(fro, chan, message):
 	target = message[0]
 	message = " ".join(message[1:]).strip()
@@ -1282,7 +1301,7 @@ def rank_map(fro, chan, message):
         freeze_status = 1
     elif rank_type == 'unrank':
         rank_typed_str = 'unranke'
-        rank_type_id = 9
+        rank_type_id = -3
         freeze_status = 0
 
     # Grab beatmap_data from db
@@ -1419,7 +1438,7 @@ def rank_map(fro, chan, message):
             glob.db.execute('UPDATE scores s JOIN (SELECT userid, MAX(score) maxscore FROM scores JOIN beatmaps ON scores.beatmap_md5 = beatmaps.beatmap_md5 WHERE beatmaps.beatmap_md5 = (SELECT beatmap_md5 FROM beatmaps WHERE beatmap_id = {} LIMIT 1) GROUP BY userid) s2 ON s.score = s2.maxscore AND s.userid = s2.userid SET completed = 2'.format(beatmap_data['beatmap_id'
                             ]))
 
-    # chat.sendMessage(glob.BOT_NAME, "#nowranked", msg)
+    chat.sendMessage(glob.BOT_NAME, "#beatmaps", msg)
     return msg
 
 
@@ -1446,11 +1465,7 @@ commands = [
 	}, {
 		"trigger": "!help",
 		"response": "Click (here)[https://minase.tk/doc/fokabot] for full command list"
-	}, #{
-		#"trigger": "!ask",
-		#"syntax": "<question>",
-		#"callback": ask
-	#}, {
+	},
 	{
 		"trigger": "!alert",
 		"syntax": "<message>",
@@ -1577,6 +1592,11 @@ commands = [
 		"privileges": privileges.ADMIN_MANAGE_BEATMAPS,
 		"syntax": "<rank/unrank/love> <set/map> <ID>",
 		"callback": rank_map
+	},
+	{
+		"trigger": "!vanilla",
+
+		"callback": vanilla
 	}
 	#
 	#	"trigger": "!acc",
