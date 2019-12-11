@@ -1439,6 +1439,8 @@ def rank_map(fro, chan, message):
                             ]))
 
     chat.sendMessage(glob.BOT_NAME, "#beatmaps", msg)
+    chat.sendMessage(glob.BOT_NAME, fro, "Ranked!")
+    glob.redis.publish("minase:rank_beatmap", json.dumps({"type": map_type,"id": beatmap_data['beatmapset_id'],"by": fro}))
     return msg
 
 
