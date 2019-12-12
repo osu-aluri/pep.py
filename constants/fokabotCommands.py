@@ -1546,22 +1546,6 @@ commands = [
 		"privileges": privileges.ADMIN_BAN_USERS,
 		"callback": unrestrict
 	}, {
-		"trigger": "\x01ACTION is listening to",
-		"callback": tillerinoNp
-	}, {
-		"trigger": "\x01ACTION is playing",
-		"callback": tillerinoNp
-	}, {
-		"trigger": "\x01ACTION is watching",
-		"callback": tillerinoNp
-	}, {
-		"trigger": "!with",
-		"callback": tillerinoMods,
-		"syntax": "<mods>"
-	}, {
-		"trigger": "!last",
-		"callback": tillerinoLast
-	}, {
 		"trigger": "!ir",
 		"privileges": privileges.ADMIN_MANAGE_SERVERS,
 		"callback": instantRestart
