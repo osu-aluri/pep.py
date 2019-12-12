@@ -404,7 +404,7 @@ def getPPMessage(userID, just_data = False):
 		currentAcc = token.tillerino[2]
 
 		# Send request to LETS api
-		url = "https://minase.tk/letsapi/v1/pp?b={}&m={}&g=0".format(glob.conf.config["server"]["letsapiurl"].rstrip("/"), currentMap, currentMods)
+		url = "https://minase.tk/letsapi/v1/pp?b={}&m={}&g=0&a={}".format(glob.conf.config["server"]["letsapiurl"].rstrip("/"), currentMap, currentMods, tillerinoAcc)
 		resp = requests.get(url, timeout=10)
 		try:
 			assert resp is not None
