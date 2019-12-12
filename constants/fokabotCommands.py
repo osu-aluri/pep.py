@@ -761,7 +761,7 @@ def report(fro, chan, message):
 		chat.sendMessage(glob.BOT_NAME, "#admin", adminMsg)
 		log.warning(adminMsg, discord="cm")
 	except exceptions.invalidUserException:
-		msg = "Hello, {} here! You can't report me. I won't forget what you've tried to do. Watch out."
+		msg = "Hello, {} here! You can't report me. I won't forget what you've tried to do. Watch out.".format(fro)
 	except exceptions.invalidArgumentsException:
 		msg = "Invalid report command syntax. To report an user, click on it and select 'Report user'."
 	except exceptions.userNotFoundException:

@@ -190,7 +190,8 @@ def sendMessage(fro = "", to = "", message:str = "", token = None, toIRC = True)
 		# Redirect !report to the bot
 		if message.startswith("!report"):
 			to = glob.BOT_NAME
-
+		if message.startswith("!last"):
+			to = glob.BOT_NAME
 		# Determine internal name if needed
 		# (toclient is used clientwise for #multiplayer and #spectator channels)
 		toClient = to
